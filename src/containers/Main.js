@@ -11,23 +11,34 @@ const Main = props => {
     <div className="container">
       <Switch>
         <Route exact path="/" render={props => <Homepage {...props} />} />
-        <Route exact path="/signin" render={props => {
-          return (
-            <AuthForm onAuth={authUser} buttonText="Log in" heading="Welcome Back." {...props} />
-          )
-        }}
+        <Route 
+          exact 
+          path="/signin" 
+          render={props => {
+            return (
+              <AuthForm 
+                onAuth={authUser} 
+                buttonText="Log in" 
+                heading="Welcome Back." 
+                {...props} 
+              />
+            );
+          }}
         />
-        <Route exact path="/signup" render={props => {
-          return (
-            <AuthForm 
-              onAuth={authUser} 
-              signUp 
-              buttonText="Sign up" 
-              heading="Join Warbler Today." 
-              {...props} 
-            />
-          )
-        }}
+        <Route 
+          exact 
+          path="/signup" 
+          render={props => {
+            return (
+              <AuthForm 
+                onAuth={authUser} 
+                signUp 
+                buttonText="Sign up" 
+                heading="Join Warbler Today." 
+                {...props} 
+              />
+            );
+          }}
         />
       </Switch>
     </div>
