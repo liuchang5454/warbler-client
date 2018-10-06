@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import errors from "../store/reducers/errors";
 
 class AuthForm extends Component {
   constructor(props) {
@@ -18,17 +19,23 @@ class AuthForm extends Component {
   handleSubmit = e=> {
     e.preventDefault();
     const authType = this.props.signUp ? "signup" : "singin";
-    //debug print
-    console.log(this.props.signUp);
-    console.log(authType);
-    this.props.onAuth(authType, this.state).then(() => {
-      console.log("LOGGED IN SUCCESSFULLY");
-    });
+    this.props
+      .onAuth(authType, this.state)
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch(() => {
+        return;
+      });
   };
 
   render() {
     const { email, username, password, profileImageUrl } = this.state;
-    const { signUp, heading, buttonText } = this.props;
+    const { signUp, heading, buttonText, errors, history, removeError } = this.props;
+
+    history.listen(() => {
+      removeError();
+    });
 
     return (
       <div>
@@ -36,7 +43,11 @@ class AuthForm extends Component {
           <div className="col-md-6">
             <form onSubmit={this.handleSubmit}>
               <h2>{heading}</h2>
-
+              {errors.message && (
+                <div className="alert alert-danger">
+                  {errors.message}
+                </div>
+              )}
               <label htmlFor="email">E-mail</label>
               <input
                 autoComplete="off"
